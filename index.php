@@ -9,15 +9,12 @@ $twig = new Twig_Environment($loader);
 $twig->getExtension('core')->setTimezone('Europe/Moscow');
 $template = $twig->loadTemplate('index.html');
 
-if (!$_GET['add']) {
-	// Show all clients
-	$query  = "SELECT *
-				FROM clients
-				LEFT JOIN client_status
-				ON clients.status_id = client_status.status_id
-				ORDER BY clients.id ASC";
-} else if ($_GET['add']) {
-	// Add a new client
+// showing all clients
+$query  = "SELECT *
+			FROM clients
+			LEFT JOIN client_status
+			ON clients.status_id = client_status.status_id
+			ORDER BY clients.id ASC";
 }
 $result = $conn->query($query);
 if (!$result) die($conn->error);
@@ -29,7 +26,7 @@ for ($j = 0 ; $j < $rows ; ++$j)
 	$row[] = $result->fetch_array(MYSQLI_ASSOC);
 }
 
-// Get all clients statuses
+// Get all possible clients statuses
 $query  = "SELECT * FROM client_status";
 $result = $conn->query($query);
 if (!$result) die($conn->error);

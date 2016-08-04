@@ -5,6 +5,7 @@ require_once "mysqli.php";
 
 if(isset($_POST['statusid']) && !empty($_POST['statusid']) && isset($_POST['clientid']) && !empty($_POST['clientid']) )
 {
+    // updating status of the client
     $statusid = intval($_POST['statusid']);
     $clientid = intval($_POST['clientid']);
     
@@ -15,6 +16,7 @@ if(isset($_POST['statusid']) && !empty($_POST['statusid']) && isset($_POST['clie
     else echo "ok";
 } else if(isset($_POST['name']) && !empty($_POST['name']) && isset($_POST['surname']) && !empty($_POST['surname']) && isset($_POST['phone']) && !empty($_POST['phone']) )
 {
+    // adding new client
     $name = $_POST['name'];
     $surname = $_POST['surname'];
     $phone = intval($_POST['phone']);

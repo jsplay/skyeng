@@ -29,7 +29,7 @@ if (!$result) die($conn->error);
 
 $result->data_seek($j);
 $row = $result->fetch_row();
-// startdate
+// converting start date into unix timestamp
 $startdate = strtotime($row[0]);
 $now = time();
 // total days difference
@@ -38,7 +38,7 @@ $tdays = ceil( ($now - $startdate) / (60*60*24) );;
 $tp = ceil($tdays / $pl);
 $row = "";
 
-// run the queries
+// get the data for each period
 for ($i = 0 ; $i < $tp ; ++$i)
 {
 	$date1 = date("Y-m-d H:i:s",$startdate + ((60*60*24)*$pl*$i));
