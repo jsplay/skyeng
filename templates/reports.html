@@ -39,7 +39,7 @@
                     <div class="table-cell-right">{{ client.ctotal }}</div>
 				    <div class="table-cell-right">
                     {% if client.regtotal > 0 %}
-                        {{ (client.regtotal / client.ctotal)*100 }}%
+                        {{ ((client.regtotal / client.ctotal)*100)|number_format(2, '.') }}%
                     {% elseif client.regtotal == 0 %}
                         {{ client.regtotal }}
                     {% endif %}
@@ -48,6 +48,9 @@
             {% endfor %}
 			</div>
 		</div>
+
+        <div class="chart"></div>
+
     </div>
     <script>
     $("#period").keyup(function () {  
@@ -59,6 +62,46 @@
             $(location).attr('href', url);
         }
     });
+    $(function () {
+    $(".chart").highcharts({
+        title: {
+            text: 'Конверсия клиентов',
+            x: -20 //center
+        },
+        xAxis: {
+            categories: {{ pdata }},
+            title: {
+                text: 'Период'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Конверсия, %'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'Конверсия',
+            data: {{ cdata }}
+        } , {
+            name: 'Всего клиентов',
+            data: {{ tdata }}
+        }, {
+            name: 'Зарег. клиентов',
+            data: {{ rdata }}
+        }]
+    });
+});
     </script>
 
 </body>

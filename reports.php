@@ -53,11 +53,28 @@ for ($i = 0 ; $i < $tp ; ++$i)
 	$row[] = $result->fetch_array(MYSQLI_ASSOC);
 	$row[$i]["startdate"] = $date1;
 	$row[$i]["enddate"] = $date2;
+	
+	// total registered clients
+	$rdata[] = $row[$i]["regtotal"];
+	// total clients
+	$tdata[] = $row[$i]["ctotal"];
+	// conversion
+	if ($row[$i]["regtotal"] != 0) {
+		$cdata[] = number_format((($row[$i]["regtotal"] / $row[$i]["ctotal"] ) * 100), 2);
+	} else {
+		$cdata[] = 0;
+	}
+	// periods
+	$pdata[] = $i+1;
 }
 
 echo $twig->render('reports.html', array(
 	'clients' => $row,
-	'days' => $pl
+	'days' => $pl,
+	'pdata' => json_encode($pdata, JSON_NUMERIC_CHECK),
+	'rdata' => json_encode($rdata, JSON_NUMERIC_CHECK),
+	'tdata' => json_encode($tdata, JSON_NUMERIC_CHECK),
+	'cdata' => json_encode($cdata, JSON_NUMERIC_CHECK)
 ));
 
 $result->close();
