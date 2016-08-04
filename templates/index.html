@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="templates/skyeng.css">
+	<!--[if lt IE 9]> 
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> 
+	<![endif]-->
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <title>Клиенты</title>
+</head>
+<body>
+	<header class="header">
+			<nav class="top-menu">
+                <a href="index.php">Клиенты</a>
+                <a href="reports.php">Отчеты</a>
+        </nav>
+	</header>
+	<div class="wrap">
+		<h1>Клиенты</h1>
+		<div class="table">
+            <div class="table-header">
+                    <div class="table-cell-head"><strong>#</strong></div>
+                    <div class="table-cell-head"><strong>Имя Фамилия</strong></div>
+                    <div class="table-cell-head"><strong>Телефон</strong></div>
+                    <div class="table-cell-head"><strong>Статус</strong></div>
+				    <div class="table-cell-head"><strong>Дата получения клиента</strong></div>
+                    <div class="table-cell-head"><strong>Действия</strong></div>
+            {% for client in clients %}
+                <div class="table-row">
+                    <div class="table-cell-right">{{ client.id }}</div>
+				    <div class="table-cell-right">{{ client.name }} {{ client.surname }}</div>
+                    <div class="table-cell-right">{{ client.phone }}</div>
+                    <div class="table-cell-right" id="statuses-cont">
+                        <select class="statuses">
+                            {% for status in statuses %}
+                                {% if status.status_id == client.status_id %}
+                                    <option value="{{ status.status_id }}" selected>{{ status.status_name_ru }}</option>
+                                {% else %}
+                                    <option value="{{ status.status_id }}">{{ status.status_name_ru }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+				    <div class="table-cell-right">{{ client.datetime|date("d-m-Y H:i") }}</div>
+                    <div class="table-cell-center" id="buttondiv"><span class="success">Успешно</span><button id="{{ client.id }}" class="savebutton" value="{{ client.id }}">Сохранить</button></div>
+                </div>
+            {% endfor %}
+			</div>
+		</div>
+        
+        <form id="addform">
+            <input type="button" id="addbutton" value="Добавить"><br><br>
+            <span class="hidden"><font class="subtitle">Новый клиент:</font></span><br>
+            <input class="hidden" type="text" id="name" width="10" placeholder="Имя">
+            <input class="hidden" type="text" id="surname" width="10" placeholder="Фамилия">
+            <input class="hidden numbersonly" type="text" id="phone" width="10" placeholder="Телефон"><br>
+            <span class="hidden" id="errors"></span><br><br>
+            <input type="button" class="hidden" id="save" value="Сохранить">
+            <input type="button" class="hidden" id="cancel" value="Отменить"><br>
+            <span class="success2">Клиент добавлен успешно</span>
+        </form>
+        
+        
+	</div>
+        <br><br>
+    <script src="js/skyeng.js"></script>
+</body>
+</html>

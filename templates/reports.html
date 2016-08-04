@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="templates/skyeng.css">
+	<!--[if lt IE 9]> 
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> 
+	<![endif]-->
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <title>Отчеты</title>
+</head>
+<body>
+
+	<header class="header">
+			<nav class="top-menu">
+                <a href="index.php">Клиенты</a>
+                <a href="reports.php">Отчеты</a>
+        </nav>
+	</header>
+	<div class="wrap">
+		<h1>Отчеты</h1>
+        <span>Длина периода: <input type="text" id="period" value="{{ days }}"> (дней) <button id="refresh">Обновить</button></span><br><br>
+        <div class="table">
+            <div class="table-header">
+                    <div class="table-cell-head"><strong>#</strong></div>
+                    <div class="table-cell-head"><strong>Начало периода</strong></div>
+                    <div class="table-cell-head"><strong>Конец периода</strong></div>
+                    <div class="table-cell-head"><strong>Зарег. клиентов</strong></div>
+                    <div class="table-cell-head"><strong>Всего клиентов</strong></div>
+                    <div class="table-cell-head"><strong>Конверсия</strong></div>
+            {% for client in clients %}
+                <div class="table-row">
+                    <div class="table-cell-right">{{ loop.index }}</div>
+				    <div class="table-cell-right">{{ client.startdate|date("d-m-Y") }}</div>
+                    <div class="table-cell-right">{{ client.enddate|date("d-m-Y") }}</div>
+                    <div class="table-cell-right">{{ client.regtotal }}</div>
+                    <div class="table-cell-right">{{ client.ctotal }}</div>
+				    <div class="table-cell-right">
+                    {% if client.regtotal > 0 %}
+                        {{ (client.regtotal / client.ctotal)*100 }}%
+                    {% elseif client.regtotal == 0 %}
+                        {{ client.regtotal }}
+                    {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+			</div>
+		</div>
+    </div>
+    <script>
+    $("#period").keyup(function () {  
+        this.value = this.value.replace(/[^0-9\.]/g,''); 
+    });
+    $( "#refresh" ).click(function() {
+        if ($("#period").val() > 0) {
+            var url = "reports.php?days=" + $("#period").val();
+            $(location).attr('href', url);
+        }
+    });
+    </script>
+
+</body>
+</html>
