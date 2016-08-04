@@ -15,6 +15,9 @@ date_default_timezone_set('Europe/Moscow');
 if(isset($_GET['days']) && !empty($_GET['days']) )
 {
     $pl = intval($_GET['days']);
+	if ($pl == 0) {
+		$pl = 30;
+	}
 } else {
 	$pl = 30;	
 }
