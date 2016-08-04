@@ -15,7 +15,7 @@ $query  = "SELECT *
 			LEFT JOIN client_status
 			ON clients.status_id = client_status.status_id
 			ORDER BY clients.id ASC";
-}
+
 $result = $conn->query($query);
 if (!$result) die($conn->error);
 
