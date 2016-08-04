@@ -1,8 +1,8 @@
 <?php
 
 $hn = 'localhost';
-$db = 'bestpeople';
+$db = '';
 $un = 'root';
-$pw = 'admin';
+$pw = '';
 
 ?>
