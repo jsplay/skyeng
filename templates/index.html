@@ -29,9 +29,9 @@
                     <div class="table-cell-head"><strong>Действия</strong></div>
             {% for client in clients %}
                 <div class="table-row">
-                    <div class="table-cell-right">{{ client.id }}</div>
-				    <div class="table-cell-right">{{ client.name }} {{ client.surname }}</div>
-                    <div class="table-cell-right">{{ client.phone }}</div>
+                    <div class="table-cell-left">{{ client.id }}</div>
+				    <div class="table-cell-left">{{ client.name }} {{ client.surname }}</div>
+                    <div class="table-cell-left">{{ client.phone }}</div>
                     <div class="table-cell-right" id="statuses-cont">
                         <select class="statuses">
                             {% for status in statuses %}
